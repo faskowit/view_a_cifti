@@ -32,7 +32,7 @@ if nargin < 3
     end
 end
 
-plotinds = surfhelp.(hemi).inds-surfhelp.(hemi).inds(1)+1 ; 
+plotinds = surfhelp.(hemi).inds-surfhelp.(hemi).inds(1)+1 ;
 
 if datalen == lens.lhrh
     if strcmp(hemi,'lh')
@@ -40,6 +40,8 @@ if datalen == lens.lhrh
     else
         datainds = lens.lh+1:lens.lhrh ; 
     end
+elseif datalen == lens.fs_LR_hemi
+    datainds = plotinds ; 
 else
     datainds = 1:length(plotinds) ; 
 end

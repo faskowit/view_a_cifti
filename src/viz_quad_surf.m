@@ -1,4 +1,4 @@
-function h = viz_quad_surf(surfhelp,cortexdata,cmap,clipvals)
+function [TLoverall,h] = viz_quad_surf(surfhelp,cortexdata,cmap,clipvals)
 
 if nargin<3
     cmap = parula(100) ; 
