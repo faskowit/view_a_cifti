@@ -32,6 +32,7 @@ if nargin < 3
     end
 end
 
+% move the inds up potentially, if plotting right side
 plotinds = surfhelp.(hemi).inds-surfhelp.(hemi).inds(1)+1 ;
 
 if datalen == lens.lhrh
@@ -48,13 +49,18 @@ end
    
 % figure out the view
 if ~exist('viewangle','var') || isempty(viewangle)
+    % if not provide, just default to lateral views of hemi
     if strcmp(hemi,'lh')
-        viewangle = -90 ;
+        viewangle = [ -90 0 ] ;
     elseif strcmp(hemi,'rh')
-        viewangle = 90 ;
+        viewangle = [ 90 0 ] ;
     else
-        viewangle = 0 ;
+        viewangle = [ 0 0 ] ;
     end
+end
+% fixup any single views by setting second angle to 0
+if isscalar(viewangle)
+    viewangle = [viewangle 0] ; 
 end
 
 if ~exist('cmap','var') || isempty(cmap)
@@ -85,14 +91,12 @@ plotdata = nan(lens.fs_LR_hemi,1) ;
 plotdata(plotinds) = clip(data(datainds),clipvals(1),clipvals(2)) ; 
 
 % grab the non nan data -- there might be nan even in the input data
-% nonnandata = plotdata(~isnan(plotdata)) ; 
-% coloredges = linspace(min(nonnandata),max(nonnandata)+eps,ncolorbin+1) ; 
 coloredges = linspace(clipvals(1),clipvals(2)+eps,ncolorbin+1) ; 
 colorinds = discretize(plotdata,coloredges) ; 
 
 % make the inds 0
 colorinds(isnan(colorinds)) = 0 ;
-% and now shift the colormap 'up' 1
+% and now shift the colormap 'up' 1, to account for 0's
 colorinds = colorinds+1 ; 
 
 % plot the surface
@@ -111,7 +115,7 @@ colormap(cmap)
 view(gca,3)
 axis equal
 axis off
-view(viewangle,0)
+view(viewangle(1),viewangle(2))
 material dull
 camlight headlight
 lighting gouraud
