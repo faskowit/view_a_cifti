@@ -8,6 +8,7 @@ if ~iscolumn(data)
     end
 end
 
+% harcode in some fsLR lengths
 lens.lh = 29696 ; 
 lens.rh = 29716 ; 
 lens.fs_LR_hemi = 32492 ; 
@@ -23,12 +24,12 @@ if nargin < 3
     elseif datalen == lens.rh
         hemi = 'rh' ;
     elseif datalen == lens.lhrh
-        % pass
+        error('need to provide hemi please')
     elseif datalen == lens.fs_LR_hemi
         error('need to provide hemi please')
         % plotinds = 1:lens.fs_LR_hemi ; 
     else
-        error('problematic data length')
+        error('problematic data length provided')
     end
 end
 
@@ -43,6 +44,12 @@ if datalen == lens.lhrh
     end
 elseif datalen == lens.fs_LR_hemi
     datainds = plotinds ; 
+elseif datalen == lens.fs_LR_hemi*2
+    if strcmp(hemi,'lh')
+        datainds = plotinds ; 
+    else
+        datainds = plotinds+lens.fs_LR_hemi ; 
+    end
 else
     datainds = 1:length(plotinds) ; 
 end
@@ -100,6 +107,7 @@ colorinds(isnan(colorinds)) = 0 ;
 colorinds = colorinds+1 ; 
 
 % plot the surface
+hold off
 h = patch('faces',surfhelp.(hemi).surf.faces,...
                 'vertices', surfhelp.(hemi).surf.vertices, ...
                 'facevertexcdata',colorinds,...

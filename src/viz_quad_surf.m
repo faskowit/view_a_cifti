@@ -1,10 +1,10 @@
 function [TLoverall,h] = viz_quad_surf(surfhelp,cortexdata,cmap,clipvals)
 
-if nargin<3
+if ~exist('cmap','var') || isempty(cmap)
     cmap = parula(100) ; 
 end
 
-if nargin<4
+if ~exist('clipvals','var') || isempty(clipvals)
     clipvals = [ min(cortexdata) max(cortexdata) ] ; 
 end
 
