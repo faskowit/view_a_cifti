@@ -50,8 +50,10 @@ elseif datalen == lens.fs_LR_hemi*2
     else
         datainds = plotinds+lens.fs_LR_hemi ; 
     end
-else
+elseif datalen == lens.lh || datalen == lens.rh 
     datainds = 1:length(plotinds) ; 
+else
+    datainds = surfhelp.(hemi).inds ; 
 end
    
 % figure out the view
@@ -92,7 +94,7 @@ end
 %% plot eet
 
 % initialize 
-plotdata = nan(lens.fs_LR_hemi,1) ; 
+plotdata = nan(size(surfhelp.(hemi).surf.vertices,1),1) ; 
 
 % potentially clip the data
 plotdata(plotinds) = clip(data(datainds),clipvals(1),clipvals(2)) ; 
