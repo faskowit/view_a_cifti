@@ -35,4 +35,4 @@ cb.Location = "east" ;
 cb.AxisLocation = 'out' ; 
 
 colormap(nt,cmap)
-clim([clipvals(1) clipvals(2)])
+clim(double([clipvals(1) clipvals(2)]))
