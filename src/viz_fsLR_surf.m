@@ -98,7 +98,7 @@ plotdata = nan(size(surfhelp.(hemi).surf.vertices,1),1) ;
 
 % since the builtin clip function is only in ver matlab versions
 % this'll do
-clip = @(x_,low,upp) max(min(x_,upp),low) ; 
+clip = @(x_,low,upp) max(min(x_,upp,'includenan'),low,'includenan') ; 
 
 % potentially clip the data
 plotdata(plotinds) = clip(data(datainds),clipvals(1),clipvals(2)) ; 
