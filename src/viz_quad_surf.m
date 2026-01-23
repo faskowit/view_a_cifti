@@ -36,3 +36,4 @@ cb.AxisLocation = 'out' ;
 
 colormap(nt,cmap)
 clim(double([clipvals(1) clipvals(2)]))
+set(gcf,'Color','w')
